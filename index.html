@@ -7,79 +7,30 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .product-card {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            padding: 15px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .card img {
-            max-height: 200px;
-            width: 100%;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-        .header,
-        .footer {
-            border: 1px solid #ccc;
-            padding: 15px;
-            background-color: #23272b;
-            color: white;
-            text-align: center;
-        }
-        .footer {
-            margin-top: 20px;
-        }
-        .alert {
-            background-color: #28a745;
-            color: white;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            z-index: 1050;
-        }
-        .alert .close {
-            color: white;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header class="text-center" style="padding: 20px; background-color: #343a40; color: white;">
             <h1>E-commerce Dashboard</h1>
-        </div>
+        </header>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible fade" id="success-alert" role="alert">
-                    <strong id="success-message"></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
-                </div>
-            </div>
+        <div class="alert alert-dismissible fade" id="success-alert" role="alert">
+            <strong id="success-message"></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
         </div>
 
         <div class="row" id="product-list"></div>
 
-        <div class="footer">
+        <footer class="text-center" style="padding: 20px; margin-top: 40px; background-color: #343a40; color: white;">
             <p>Contact Us | Follow Us on Social Media</p>
-        </div>
+        </footer>
     </div>
 
     <script>
         const products = [
             { id: 1, name: "Laptop", price: 1500, stock: 5, image: "Laptop.png" },
             { id: 2, name: "Headphones", price: 100, stock: 10, image: "headphones.png" },
-            { id: 3, name: "Keyboard", price: 50, stock: 20, image: "keyboard.png" },
+            { id: 3, name: "Keyboard", price: 50, stock: 20, image: "keyboard.jpg" },
         ];
 
         function renderProducts() {
@@ -87,12 +38,12 @@
             products.forEach((product) => {
                 html += `
                     <div class="col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                            <div class="card-body">
-                                <h5 class="card-title">${product.name}</h5>
-                                <p class="card-text">Price: $${product.price}</p>
-                                <p class="card-text">Stock: ${product.stock}</p>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">${product.name}</div>
+                            <div class="panel-body text-center">
+                                <img src="${product.image}" class="img-responsive center-block" alt="${product.name}" style="height: 150px; object-fit: cover;">
+                                <p>Price: $${product.price}</p>
+                                <p>Stock: ${product.stock}</p>
                                 <button class="btn btn-primary add-to-cart" data-id="${product.id}">Add to Cart</button>
                             </div>
                         </div>
@@ -115,9 +66,11 @@
                 const productName = message.product.name;
                 document.getElementById("success-message").innerText = `The ${productName} was added to the cart successfully.`;
                 const alert = document.getElementById("success-alert");
-                alert.style.display = "block";
+                alert.classList.remove("fade");
+                alert.classList.add("show");
                 setTimeout(() => {
-                    alert.style.display = "none";
+                    alert.classList.add("fade");
+                    alert.classList.remove("show");
                 }, 3000);
             }
         }
